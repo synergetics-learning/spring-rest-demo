@@ -1,0 +1,14 @@
+FROM openjdk:11-jdk as build
+WORKDIR /app
+COPY . .
+RUN ["./mvnw", "clean", "package", "-DskipTests"]
+
+
+
+FROM openjdk:11-jdk 
+COPY --from=build /app/target/library-api-1.0.jar /app/library-api-1.0.jar
+ADD  https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.2.8/applicationinsights-agent-3.2.8.jar /app/
+EXPOSE 8080
+ENV APPLICATION_INSIGHTS_CONNECTION_STRING "InstrumentationKey="
+ENTRYPOINT ["java" ,"-javaagent:/app/applicationinsights-agent-3.2.8.jar","-jar","/app/library-api-1.0.jar"]
+

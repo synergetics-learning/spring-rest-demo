@@ -1,0 +1,9 @@
+version: '3.6'
+
+services:
+  app:
+    image: mahendrshinde/library-api-az-insights
+    environment:
+     APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=80d1e555-ae7d-4337-a1fe-170732167429;IngestionEndpoint=https://southeastasia-1.in.applicationinsights.azure.com/"
+    ports:
+      - 80:8080
